@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #a1c4fd;
+}
+
+/* 20px Solid Green Brick Window Frame */
+.window-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 20;
+  border: 20px solid #2e7d32;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' fill='%232e7d32'/%3E%3Cpath d='M0 20h60M0 40h60M30 0v20M0 20v20M60 20v20M30 40v20' stroke='%231b5e20' stroke-width='3'/%3E%3C/svg%3E") 20 repeat;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.4), inset 0 0 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Sky Background Gradient */
+.sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #87ceeb 0%, #d4f1f9 70%, #e0f7fa 100%);
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Soft Procedural Clouds */
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 100px;
+  filter: blur(10px);
+  animation: floatClouds 45s linear infinite;
+}
+
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+}
+
+.cloud1 {
+  width: 280px;
+  height: 90px;
+  top: 15%;
+  left: -200px;
+}
+.cloud1::before { width: 120px; height: 120px; top: -50px; left: 40px; }
+.cloud1::after { width: 90px; height: 90px; top: -30px; left: 130px; }
+
+.cloud2 {
+  width: 380px;
+  height: 110px;
+  top: 45%;
+  left: -300px;
+  animation-duration: 65s;
+  animation-delay: -20s;
+}
+.cloud2::before { width: 150px; height: 150px; top: -60px; left: 60px; }
+.cloud2::after { width: 110px; height: 110px; top: -40px; left: 180px; }
+
+.cloud3 {
+  width: 240px;
+  height: 80px;
+  top: 70%;
+  left: -200px;
+  animation-duration: 50s;
+  animation-delay: -10s;
+}
+.cloud3::before { width: 100px; height: 100px; top: -40px; left: 30px; }
+.cloud3::after { width: 80px; height: 80px; top: -20px; left: 110px; }
+
+@keyframes floatClouds {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 400px)); }
+}
+
+/* Canvas Canvas Layering */
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Floating UI Button */
+#ui {
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+#spawn-btn {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: #1c3d5a;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+#spawn-btn:hover {
+  background: rgba(255, 255, 255, 0.65);
+  transform: scale(1.05);
+}
+
+#spawn-btn:active {
+  transform: scale(0.98);
+}
