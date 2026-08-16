@@ -34,24 +34,69 @@ const BASE_COLORS = [
 
 const PALETTE = [...BASE_COLORS, 'glitter'];
 
-// Tool progression list ending with Michael Jackson
+// Detailed vector graphic pictures for all 11 tools
 const TOOLS = [
-  { name: 'Needle', icon: '🪡' },
-  { name: 'Knife', icon: '🔪' },
-  { name: 'Bazooka', icon: '🚀' },
-  { name: 'Kitten', icon: '🐱' },
-  { name: 'Puppy', icon: '🐶' },
-  { name: 'Number 67', icon: '67', isText: true },
-  { name: 'Car', icon: '🚗' },
-  { name: 'Pacman', icon: 'ᗧ' },
-  { name: 'Mario', icon: '🍄' },
-  { name: 'Sonic', icon: '🦔' },
-  { name: 'Michael Jackson', icon: '🕺' }
+  { 
+    name: 'Needle', 
+    label: '🪡',
+    svg: `<svg viewBox="0 0 100 100"><path d="M75 10 L85 20 L35 70 L20 80 L30 65 Z" fill="#c0c0c0" stroke="#777" stroke-width="2"/><circle cx="78" cy="17" r="3" fill="#333"/><path d="M78 17 Q90 5 95 25" fill="none" stroke="#ff0055" stroke-width="3"/></svg>`
+  },
+  { 
+    name: 'Knife', 
+    label: '🔪',
+    svg: `<svg viewBox="0 0 100 100"><path d="M20 75 L35 60 L75 20 C85 20 85 45 60 55 L30 85 Z" fill="#e0e0e0" stroke="#999" stroke-width="2"/><rect x="15" y="70" width="20" height="15" rx="3" transform="rotate(-45 25 77)" fill="#5c3a21"/></svg>`
+  },
+  { 
+    name: 'Bazooka', 
+    label: '🚀',
+    svg: `<svg viewBox="0 0 100 100"><rect x="15" y="40" width="60" height="20" rx="4" fill="#2d4a22"/><polygon points="75,35 95,50 75,65" fill="#d32f2f"/><polygon points="15,35 5,40 5,60 15,65" fill="#1b3313"/><rect x="40" y="60" width="10" height="20" fill="#1b3313"/></svg>`
+  },
+  { 
+    name: 'Kitten', 
+    label: '🐱',
+    svg: `<svg viewBox="0 0 100 100"><polygon points="20,40 35,10 45,42" fill="#ff9800"/><polygon points="80,40 65,10 55,42" fill="#ff9800"/><circle cx="50" cy="55" r="32" fill="#ffb74d"/><circle cx="38" cy="50" r="6" fill="#2e7d32"/><circle cx="62" cy="50" r="6" fill="#2e7d32"/><polygon points="50,60 45,64 55,64" fill="#e91e63"/><path d="M20 58 L5 55 M20 62 L5 65 M80 58 L95 55 M80 62 L95 65" stroke="#fff" stroke-width="3"/></svg>`
+  },
+  { 
+    name: 'Puppy', 
+    label: '🐶',
+    svg: `<svg viewBox="0 0 100 100"><ellipse cx="20" cy="35" rx="12" ry="25" fill="#6d4c41"/><ellipse cx="80" cy="35" rx="12" ry="25" fill="#6d4c41"/><circle cx="50" cy="50" r="30" fill="#8d6e63"/><ellipse cx="50" cy="62" rx="16" ry="12" fill="#d7ccc8"/><circle cx="38" cy="45" r="5" fill="#000"/><circle cx="62" cy="45" r="5" fill="#000"/><ellipse cx="50" cy="58" rx="6" ry="4" fill="#000"/></svg>`
+  },
+  { 
+    name: 'Number 67', 
+    label: '67',
+    svg: `<svg viewBox="0 0 100 100"><rect x="5" y="5" width="90" height="90" rx="20" fill="#d32f2f"/><text x="50" y="68" font-size="52" font-weight="900" fill="#fff" text-anchor="middle" font-family="sans-serif">67</text></svg>`
+  },
+  { 
+    name: 'Car', 
+    label: '🚗',
+    svg: `<svg viewBox="0 0 100 100"><path d="M15 55 Q25 30 40 28 L65 28 Q80 30 88 55 Z" fill="#e53935"/><rect x="10" y="50" width="82" height="22" rx="8" fill="#c62828"/><circle cx="28" cy="72" r="10" fill="#333"/><circle cx="28" cy="72" r="4" fill="#ccc"/><circle cx="72" cy="72" r="10" fill="#333"/><circle cx="72" cy="72" r="4" fill="#ccc"/><polygon points="42,33 60,33 63,50 38,50" fill="#b3e5fc"/></svg>`
+  },
+  { 
+    name: 'Pacman', 
+    label: 'ᗧ',
+    svg: `<svg viewBox="0 0 100 100"><path d="M 50,50 L 92,26 A 42,42 0 1,0 92,74 Z" fill="#ffeb3b"/><circle cx="50" cy="24" r="5" fill="#000"/></svg>`
+  },
+  { 
+    name: 'Mario', 
+    label: '🍄',
+    svg: `<svg viewBox="0 0 100 100"><path d="M 10 50 A 40 40 0 0 1 90 50 Z" fill="#d32f2f"/><rect x="10" y="50" width="80" height="12" fill="#d32f2f"/><circle cx="50" cy="38" r="15" fill="#fff"/><text x="50" y="44" font-size="18" font-weight="900" fill="#d32f2f" text-anchor="middle">M</text></svg>`
+  },
+  { 
+    name: 'Sonic', 
+    label: '🦔',
+    svg: `<svg viewBox="0 0 100 100"><path d="M 15 70 L 35 20 L 55 45 L 75 15 L 85 60 Z" fill="#1565c0"/><circle cx="50" cy="55" r="28" fill="#1976d2"/><ellipse cx="50" cy="65" rx="18" ry="12" fill="#ffe0b2"/><circle cx="60" cy="48" r="6" fill="#fff"/><circle cx="62" cy="48" r="3" fill="#000"/><ellipse cx="66" cy="60" rx="4" ry="3" fill="#000"/></svg>`
+  },
+  { 
+    name: 'Michael Jackson', 
+    label: '🕺',
+    svg: `<svg viewBox="0 0 100 100"><path d="M 10 45 Q 50 35 90 45 L 75 40 Q 50 15 25 40 Z" fill="#111"/><rect x="30" y="38" width="40" height="6" fill="#d32f2f"/><path d="M 40 55 L 65 55 L 70 85 L 35 85 Z" fill="#fff" stroke="#ccc"/><circle cx="45" cy="65" r="2" fill="#999"/><circle cx="58" cy="72" r="2" fill="#999"/></svg>`
+  }
 ];
 
 let currentToolIndex = 0;
 let isToolActive = false;
-let maxBubbleReached = false;
+let totalSpawned = 0;
+let totalMerged = 0;
 
 const bubbles = [];
 const raycaster = new THREE.Raycaster();
@@ -65,7 +110,6 @@ function playSound(type = 'spawn') {
 
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-
   const now = audioCtx.currentTime;
 
   if (type === 'spawn') {
@@ -81,7 +125,6 @@ function playSound(type = 'spawn') {
     osc.start(now);
     osc.stop(now + 0.08);
   } else if (type === 'pop') {
-    // Satisfying burst sound when popping giant bubble
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(800, now);
     osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
@@ -92,17 +135,6 @@ function playSound(type = 'spawn') {
     osc.start(now);
     osc.stop(now + 0.15);
   }
-}
-
-// Generate dynamic custom SVG cursors for each tool
-function createToolCursor(tool) {
-  let svg;
-  if (tool.isText) {
-    svg = `<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'><text y='30' font-size='26' font-weight='900' fill='%23d32f2f'>67</text></svg>`;
-  } else {
-    svg = `<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'><text y='32' font-size='30'>${tool.icon}</text></svg>`;
-  }
-  return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}") 16 16, crosshair`;
 }
 
 function createBubbleMaterial(colorHex) {
@@ -157,13 +189,17 @@ function getScreenLimits(zPos, radius) {
 
 const spawnBtn = document.getElementById('spawn-btn');
 const toolBtn = document.getElementById('tool-btn');
+const customCursor = document.getElementById('custom-cursor');
 const victoryScreen = document.getElementById('victory-screen');
 const restartBtn = document.getElementById('restart-btn');
 
-function updateToolUI() {
-  if (maxBubbleReached && currentToolIndex < TOOLS.length) {
+// Check if ALL bubbles have merged into exactly ONE remaining bubble
+function checkToolAvailability() {
+  const isOneBubbleRemaining = (bubbles.length === 1 && totalMerged > 0);
+  
+  if (isOneBubbleRemaining && currentToolIndex < TOOLS.length) {
     const tool = TOOLS[currentToolIndex];
-    toolBtn.textContent = `${tool.icon} Pop with ${tool.name}`;
+    toolBtn.textContent = `${tool.label} Pop with ${tool.name}`;
     toolBtn.classList.remove('hidden');
     spawnBtn.disabled = true;
   } else {
@@ -173,8 +209,8 @@ function updateToolUI() {
 }
 
 function spawnBubble() {
-  if (maxBubbleReached) return;
   playSound('spawn');
+  totalSpawned++;
 
   const radius = 0.7 + Math.random() * 0.3;
   const geometry = new THREE.SphereGeometry(1, 32, 32);
@@ -200,6 +236,8 @@ function spawnBubble() {
 
   scene.add(mesh);
   bubbles.push({ mesh, radius, velocity, color: new THREE.Color(colorHex), isGlitter });
+
+  checkToolAvailability();
 }
 
 function disposeMesh(bubble) {
@@ -211,6 +249,7 @@ function disposeMesh(bubble) {
 }
 
 function mergeBubbles(b1, b2) {
+  totalMerged++;
   const v1 = Math.pow(b1.radius, 3);
   const v2 = Math.pow(b2.radius, 3);
   const vTotal = v1 + v2;
@@ -240,12 +279,6 @@ function mergeBubbles(b1, b2) {
 
   scene.add(newMesh);
 
-  // Trigger max bubble tool state when radius gets large (>= 2.5) or single merged bubble
-  if (newRadius >= 2.3) {
-    maxBubbleReached = true;
-    updateToolUI();
-  }
-
   return { mesh: newMesh, radius: newRadius, velocity: newVel, color: newColor, isGlitter: hasGlitter };
 }
 
@@ -259,20 +292,33 @@ function checkCollisions() {
         const merged = mergeBubbles(b1, b2);
         bubbles[i] = merged;
         bubbles.splice(j, 1);
+        checkToolAvailability();
         return checkCollisions();
       }
     }
   }
 }
 
-// Tool button click: Turn cursor into current tool
+// Track mouse/touch coordinates to move custom image cursor
+window.addEventListener('pointermove', (e) => {
+  if (isToolActive) {
+    customCursor.style.left = `${e.clientX}px`;
+    customCursor.style.top = `${e.clientY}px`;
+  }
+});
+
+// Click tool button to activate floating image cursor
 toolBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   isToolActive = true;
-  document.body.style.cursor = createToolCursor(TOOLS[currentToolIndex]);
+  
+  const currentTool = TOOLS[currentToolIndex];
+  customCursor.innerHTML = currentTool.svg;
+  customCursor.classList.remove('hidden');
+  document.body.style.cursor = 'none';
 });
 
-// Canvas click handling for popping bubbles with tool
+// Pop bubble on canvas tap/click
 window.addEventListener('pointerdown', (e) => {
   if (!isToolActive || bubbles.length === 0) return;
 
@@ -290,25 +336,24 @@ window.addEventListener('pointerdown', (e) => {
       disposeMesh(bubbles[index]);
       bubbles.splice(index, 1);
 
-      // Reset tool cursor and state
+      // Hide custom graphic cursor & restore standard mouse pointer
+      customCursor.classList.add('hidden');
       document.body.style.cursor = 'default';
       isToolActive = false;
-      maxBubbleReached = false;
+      totalMerged = 0;
       currentToolIndex++;
 
-      // Check for completion after Michael Jackson pops the last bubble
       if (currentToolIndex >= TOOLS.length) {
         triggerVictory();
       } else {
-        updateToolUI();
+        checkToolAvailability();
       }
     }
   }
 });
 
-// Confetti Particle Explosion Generator
 function triggerVictory() {
-  updateToolUI();
+  checkToolAvailability();
   victoryScreen.classList.remove('hidden');
 
   const canvas = document.getElementById('confetti-canvas');
@@ -355,8 +400,8 @@ function triggerVictory() {
 restartBtn.addEventListener('click', () => {
   victoryScreen.classList.add('hidden');
   currentToolIndex = 0;
-  maxBubbleReached = false;
-  updateToolUI();
+  totalMerged = 0;
+  checkToolAvailability();
 });
 
 function animate() {
