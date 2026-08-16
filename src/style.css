@@ -16,23 +16,39 @@ html, body {
   user-select: none;
 }
 
-/* Real Picture Floating Tool Cursor */
+/* Floating Tool Cursor Overlay */
 #custom-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
-  transition: transform 0.05s ease-out;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#custom-cursor svg {
+#custom-cursor svg,
+#custom-cursor img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
+}
+
+#custom-cursor img.avatar-cursor {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+}
+
+#custom-cursor .emoji-cursor {
+  font-size: 52px;
+  line-height: 1;
+  display: block;
 }
 
 .window-frame {
@@ -143,12 +159,6 @@ canvas {
 @keyframes pulseTool {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.06); box-shadow: 0 0 24px rgba(255, 200, 0, 0.8); }
-}
-
-#spawn-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
 }
 
 .hidden {
