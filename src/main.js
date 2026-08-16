@@ -34,7 +34,6 @@ const BASE_COLORS = [
 
 const PALETTE = [...BASE_COLORS, 'glitter'];
 
-// Detailed vector graphic pictures for all 11 tools
 const TOOLS = [
   { 
     name: 'Needle', 
@@ -93,10 +92,14 @@ const TOOLS = [
   }
 ];
 
+const POPS_PER_TOOL = 10;
+const SPAWNS_TO_UNLOCK = 20;
+
+let spawnCount = 0;
 let currentToolIndex = 0;
+let popsWithCurrentTool = 0;
 let isToolActive = false;
-let totalSpawned = 0;
-let totalMerged = 0;
+let toolsUnlocked = false;
 
 const bubbles = [];
 const raycaster = new THREE.Raycaster();
@@ -193,24 +196,23 @@ const customCursor = document.getElementById('custom-cursor');
 const victoryScreen = document.getElementById('victory-screen');
 const restartBtn = document.getElementById('restart-btn');
 
-// Check if ALL bubbles have merged into exactly ONE remaining bubble
-function checkToolAvailability() {
-  const isOneBubbleRemaining = (bubbles.length === 1 && totalMerged > 0);
-  
-  if (isOneBubbleRemaining && currentToolIndex < TOOLS.length) {
+function updateToolUI() {
+  if (toolsUnlocked && currentToolIndex < TOOLS.length) {
     const tool = TOOLS[currentToolIndex];
-    toolBtn.textContent = `${tool.label} Pop with ${tool.name}`;
+    toolBtn.textContent = `${tool.label} ${tool.name} (${popsWithCurrentTool}/${POPS_PER_TOOL})`;
     toolBtn.classList.remove('hidden');
-    spawnBtn.disabled = true;
   } else {
     toolBtn.classList.add('hidden');
-    spawnBtn.disabled = false;
   }
 }
 
 function spawnBubble() {
   playSound('spawn');
-  totalSpawned++;
+  spawnCount++;
+
+  if (!toolsUnlocked && spawnCount >= SPAWNS_TO_UNLOCK) {
+    toolsUnlocked = true;
+  }
 
   const radius = 0.7 + Math.random() * 0.3;
   const geometry = new THREE.SphereGeometry(1, 32, 32);
@@ -237,7 +239,7 @@ function spawnBubble() {
   scene.add(mesh);
   bubbles.push({ mesh, radius, velocity, color: new THREE.Color(colorHex), isGlitter });
 
-  checkToolAvailability();
+  updateToolUI();
 }
 
 function disposeMesh(bubble) {
@@ -249,7 +251,6 @@ function disposeMesh(bubble) {
 }
 
 function mergeBubbles(b1, b2) {
-  totalMerged++;
   const v1 = Math.pow(b1.radius, 3);
   const v2 = Math.pow(b2.radius, 3);
   const vTotal = v1 + v2;
@@ -292,14 +293,12 @@ function checkCollisions() {
         const merged = mergeBubbles(b1, b2);
         bubbles[i] = merged;
         bubbles.splice(j, 1);
-        checkToolAvailability();
         return checkCollisions();
       }
     }
   }
 }
 
-// Track mouse/touch coordinates to move custom image cursor
 window.addEventListener('pointermove', (e) => {
   if (isToolActive) {
     customCursor.style.left = `${e.clientX}px`;
@@ -307,7 +306,6 @@ window.addEventListener('pointermove', (e) => {
   }
 });
 
-// Click tool button to activate floating image cursor
 toolBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   isToolActive = true;
@@ -318,7 +316,6 @@ toolBtn.addEventListener('click', (e) => {
   document.body.style.cursor = 'none';
 });
 
-// Pop bubble on canvas tap/click
 window.addEventListener('pointerdown', (e) => {
   if (!isToolActive || bubbles.length === 0) return;
 
@@ -336,24 +333,32 @@ window.addEventListener('pointerdown', (e) => {
       disposeMesh(bubbles[index]);
       bubbles.splice(index, 1);
 
-      // Hide custom graphic cursor & restore standard mouse pointer
-      customCursor.classList.add('hidden');
-      document.body.style.cursor = 'default';
-      isToolActive = false;
-      totalMerged = 0;
-      currentToolIndex++;
+      popsWithCurrentTool++;
 
-      if (currentToolIndex >= TOOLS.length) {
-        triggerVictory();
+      if (popsWithCurrentTool >= POPS_PER_TOOL) {
+        popsWithCurrentTool = 0;
+        currentToolIndex++;
+        
+        customCursor.classList.add('hidden');
+        document.body.style.cursor = 'default';
+        isToolActive = false;
+
+        if (currentToolIndex >= TOOLS.length) {
+          triggerVictory();
+        }
       } else {
-        checkToolAvailability();
+        // Update tool cursor image if tool is active
+        const currentTool = TOOLS[currentToolIndex];
+        customCursor.innerHTML = currentTool.svg;
       }
+
+      updateToolUI();
     }
   }
 });
 
 function triggerVictory() {
-  checkToolAvailability();
+  updateToolUI();
   victoryScreen.classList.remove('hidden');
 
   const canvas = document.getElementById('confetti-canvas');
@@ -399,9 +404,14 @@ function triggerVictory() {
 
 restartBtn.addEventListener('click', () => {
   victoryScreen.classList.add('hidden');
+  spawnCount = 0;
   currentToolIndex = 0;
-  totalMerged = 0;
-  checkToolAvailability();
+  popsWithCurrentTool = 0;
+  toolsUnlocked = false;
+  isToolActive = false;
+  customCursor.classList.add('hidden');
+  document.body.style.cursor = 'default';
+  updateToolUI();
 });
 
 function animate() {
