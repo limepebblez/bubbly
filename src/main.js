@@ -39,10 +39,45 @@ const BASE_COLORS = [
   0x808080  // grey
 ];
 
-// Palette includes standard colors plus the glitter variant option
 const PALETTE = [...BASE_COLORS, 'glitter'];
 
 const bubbles = [];
+
+// Web Audio API Synthesizer for a cute bubble pop sound
+let audioCtx = null;
+
+function playBubblePopSound() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = 'sine';
+
+  // Cute pitch variation: fast upward pitch sweep
+  const startFreq = 400 + Math.random() * 200;
+  const endFreq = startFreq + 500 + Math.random() * 300;
+
+  const now = audioCtx.currentTime;
+  const duration = 0.08;
+
+  osc.frequency.setValueAtTime(startFreq, now);
+  osc.frequency.exponentialRampToValueAtTime(endFreq, now + duration * 0.75);
+
+  gain.gain.setValueAtTime(0.35, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now + duration);
+}
 
 function createBubbleMaterial(colorHex) {
   return new THREE.MeshPhysicalMaterial({
@@ -58,7 +93,6 @@ function createBubbleMaterial(colorHex) {
   });
 }
 
-// 3D Silver glitter particle cloud
 function createGlitterParticles() {
   const particleCount = 180;
   const positions = new Float32Array(particleCount * 3);
@@ -104,12 +138,13 @@ function getScreenLimits(zPos, radius) {
 }
 
 function spawnBubble() {
+  playBubblePopSound(); // Play cute synth pop sound on spawn
+
   const radius = 0.7 + Math.random() * 0.3;
   const geometry = new THREE.SphereGeometry(1, 32, 32);
   const choice = PALETTE[Math.floor(Math.random() * PALETTE.length)];
   
   const isGlitter = choice === 'glitter';
-  // If glitter is picked, choose a random base color for the bubble
   const colorHex = isGlitter ? BASE_COLORS[Math.floor(Math.random() * BASE_COLORS.length)] : choice;
   
   const material = createBubbleMaterial(colorHex);
