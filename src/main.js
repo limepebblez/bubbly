@@ -77,18 +77,18 @@ const TOOLS = [
   },
   { 
     name: 'Mario', 
-    label: '🍄',
-    svg: `<svg viewBox="0 0 100 100"><path d="M 10 50 A 40 40 0 0 1 90 50 Z" fill="#d32f2f"/><rect x="10" y="50" width="80" height="12" fill="#d32f2f"/><circle cx="50" cy="38" r="15" fill="#fff"/><text x="50" y="44" font-size="18" font-weight="900" fill="#d32f2f" text-anchor="middle">M</text></svg>`
+    label: '👨🏻‍🔧',
+    svg: `<svg viewBox="0 0 100 100"><circle cx="22" cy="55" r="8" fill="#ffd1a4"/><circle cx="78" cy="55" r="8" fill="#ffd1a4"/><circle cx="50" cy="55" r="28" fill="#ffd1a4"/><path d="M 18 45 C 18 15 82 15 82 45 Z" fill="#e52521"/><path d="M 10 46 Q 50 40 90 46 Q 50 56 10 46" fill="#e52521"/><circle cx="50" cy="30" r="10" fill="#fff"/><text x="50" y="35" font-size="13" font-weight="900" fill="#e52521" text-anchor="middle" font-family="sans-serif">M</text><ellipse cx="38" cy="49" rx="3.5" ry="6" fill="#0066cc"/><ellipse cx="62" cy="49" rx="3.5" ry="6" fill="#0066cc"/><circle cx="50" cy="56" r="11" fill="#ffb380" stroke="#e6955c" stroke-width="1.5"/><path d="M 24 64 Q 36 57 50 63 Q 64 57 76 64 Q 65 76 50 68 Q 35 76 24 64 Z" fill="#2b1a09"/></svg>`
   },
   { 
     name: 'Sonic', 
     label: '🦔',
-    svg: `<svg viewBox="0 0 100 100"><path d="M 15 70 L 35 20 L 55 45 L 75 15 L 85 60 Z" fill="#1565c0"/><circle cx="50" cy="55" r="28" fill="#1976d2"/><ellipse cx="50" cy="65" rx="18" ry="12" fill="#ffe0b2"/><circle cx="60" cy="48" r="6" fill="#fff"/><circle cx="62" cy="48" r="3" fill="#000"/><ellipse cx="66" cy="60" rx="4" ry="3" fill="#000"/></svg>`
+    svg: `<svg viewBox="0 0 100 100"><path d="M 50 10 L 75 5 L 68 25 L 90 20 L 76 42 L 94 50 L 74 64 L 50 92 L 26 64 L 6 50 L 24 42 L 10 20 L 32 25 Z" fill="#0055c4"/><polygon points="25,25 35,12 38,30" fill="#ffcca0"/><polygon points="75,25 65,12 62,30" fill="#ffcca0"/><circle cx="50" cy="48" r="28" fill="#0055c4"/><ellipse cx="50" cy="62" rx="22" ry="16" fill="#ffcca0"/><path d="M 30 42 Q 50 50 70 42 Q 74 25 50 25 Q 26 25 30 42 Z" fill="#fff"/><ellipse cx="43" cy="39" rx="4" ry="7" fill="#00a82d"/><ellipse cx="57" cy="39" rx="4" ry="7" fill="#00a82d"/><ellipse cx="43" cy="39" rx="2" ry="4" fill="#000"/><ellipse cx="57" cy="39" rx="2" ry="4" fill="#000"/><ellipse cx="50" cy="54" rx="5" ry="3.5" fill="#000"/><path d="M 42 66 Q 52 72 62 64" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/></svg>`
   },
   { 
     name: 'Michael Jackson', 
     label: '🕺',
-    svg: `<svg viewBox="0 0 100 100"><path d="M 10 45 Q 50 35 90 45 L 75 40 Q 50 15 25 40 Z" fill="#111"/><rect x="30" y="38" width="40" height="6" fill="#d32f2f"/><path d="M 40 55 L 65 55 L 70 85 L 35 85 Z" fill="#fff" stroke="#ccc"/><circle cx="45" cy="65" r="2" fill="#999"/><circle cx="58" cy="72" r="2" fill="#999"/></svg>`
+    svg: `<svg viewBox="0 0 100 100"><path d="M 20 40 Q 10 70 25 90 Q 50 95 75 90 Q 90 70 80 40 Z" fill="#111"/><ellipse cx="50" cy="54" rx="24" ry="28" fill="#c68a53"/><path d="M 12 34 Q 50 24 88 34 L 76 28 Q 50 8 24 28 Z" fill="#151515"/><rect x="25" y="27" width="50" height="5" fill="#f0f0f0"/><path d="M 26 45 Q 37 43 48 45 Q 48 56 37 56 Q 26 56 26 45 Z" fill="#1a1a1a" stroke="#d4af37" stroke-width="1.5"/><path d="M 52 45 Q 63 43 74 45 Q 74 56 63 56 Q 52 56 52 45 Z" fill="#1a1a1a" stroke="#d4af37" stroke-width="1.5"/><line x1="48" y1="46" x2="52" y2="46" stroke="#d4af37" stroke-width="2"/><path d="M 50 46 L 47 62 L 53 62" fill="none" stroke="#9e6638" stroke-width="1.5"/><path d="M 37 70 Q 50 79 63 70 Q 50 73 37 70 Z" fill="#fff" stroke="#8c532b" stroke-width="1"/><path d="M 48 24 Q 40 40 44 52 Q 47 55 44 58" fill="none" stroke="#111" stroke-width="3.5" stroke-linecap="round"/></svg>`
   }
 ];
 
@@ -347,7 +347,6 @@ window.addEventListener('pointerdown', (e) => {
           triggerVictory();
         }
       } else {
-        // Update tool cursor image if tool is active
         const currentTool = TOOLS[currentToolIndex];
         customCursor.innerHTML = currentTool.svg;
       }
