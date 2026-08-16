@@ -2,13 +2,14 @@ import * as THREE from 'three';
 
 const scene = new THREE.Scene();
 
+// Telephoto perspective camera (FOV 22°) eliminates wide-angle distortion at the edges
 const camera = new THREE.PerspectiveCamera(
-  60,
+  22,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
-camera.position.set(0, 0, 18);
+camera.position.set(0, 0, 48);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -43,7 +44,6 @@ const PALETTE = [...BASE_COLORS, 'glitter'];
 
 const bubbles = [];
 
-// Web Audio API Synthesizer for a cute bubble pop sound
 let audioCtx = null;
 
 function playBubblePopSound() {
@@ -59,7 +59,6 @@ function playBubblePopSound() {
 
   osc.type = 'sine';
 
-  // Cute pitch variation: fast upward pitch sweep
   const startFreq = 400 + Math.random() * 200;
   const endFreq = startFreq + 500 + Math.random() * 300;
 
@@ -138,7 +137,7 @@ function getScreenLimits(zPos, radius) {
 }
 
 function spawnBubble() {
-  playBubblePopSound(); // Play cute synth pop sound on spawn
+  playBubblePopSound();
 
   const radius = 0.7 + Math.random() * 0.3;
   const geometry = new THREE.SphereGeometry(1, 32, 32);
