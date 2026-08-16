@@ -53,12 +53,12 @@ const TOOLS = [
   { 
     name: 'Kitten', 
     label: '🐱',
-    svg: `<svg viewBox="0 0 100 100"><polygon points="20,40 35,10 45,42" fill="#ff9800"/><polygon points="80,40 65,10 55,42" fill="#ff9800"/><circle cx="50" cy="55" r="32" fill="#ffb74d"/><circle cx="38" cy="50" r="6" fill="#2e7d32"/><circle cx="62" cy="50" r="6" fill="#2e7d32"/><polygon points="50,60 45,64 55,64" fill="#e91e63"/><path d="M20 58 L5 55 M20 62 L5 65 M80 58 L95 55 M80 62 L95 65" stroke="#fff" stroke-width="3"/></svg>`
+    svg: `<svg viewBox="0 0 100 100"><defs><radialGradient id="catEye" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c0ca33"/><stop offset="70%" stop-color="#388e3c"/><stop offset="100%" stop-color="#1b5e20"/></radialGradient><linearGradient id="catFur" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffe0b2"/><stop offset="50%" stop-color="#ffb74d"/><stop offset="100%" stop-color="#f57c00"/></linearGradient></defs><path d="M 12 40 L 28 5 L 48 35 Z" fill="url(#catFur)" stroke="#e65100" stroke-width="1.5"/><path d="M 18 36 L 28 12 L 42 33 Z" fill="#ffb6c1"/><path d="M 88 40 L 72 5 L 52 35 Z" fill="url(#catFur)" stroke="#e65100" stroke-width="1.5"/><path d="M 82 36 L 72 12 L 58 33 Z" fill="#ffb6c1"/><ellipse cx="50" cy="56" rx="38" ry="32" fill="url(#catFur)" stroke="#e65100" stroke-width="1.5"/><path d="M 50 26 L 50 36 M 42 28 L 45 36 M 58 28 L 55 36" stroke="#d84315" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="42" cy="65" rx="12" ry="9" fill="#fff8e7"/><ellipse cx="58" cy="65" rx="12" ry="9" fill="#fff8e7"/><ellipse cx="33" cy="48" rx="8" ry="11" fill="url(#catEye)"/><ellipse cx="67" cy="48" rx="8" ry="11" fill="url(#catEye)"/><ellipse cx="33" cy="48" rx="2.5" ry="9" fill="#000"/><ellipse cx="67" cy="48" rx="2.5" ry="9" fill="#000"/><circle cx="31" cy="44" r="2.5" fill="#fff"/><circle cx="65" cy="44" r="2.5" fill="#fff"/><polygon points="46,59 54,59 50,65" fill="#ff80ab"/><path d="M 44 67 Q 50 72 50 66 Q 50 72 56 67" fill="none" stroke="#5d4037" stroke-width="2" stroke-linecap="round"/><path d="M 28 62 L 2 58 M 26 66 L 2 66 M 28 70 L 4 74 M 72 62 L 98 58 M 74 66 L 98 66 M 72 70 L 96 74" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg>`
   },
   { 
     name: 'Puppy', 
     label: '🐶',
-    svg: `<svg viewBox="0 0 100 100"><ellipse cx="20" cy="35" rx="12" ry="25" fill="#6d4c41"/><ellipse cx="80" cy="35" rx="12" ry="25" fill="#6d4c41"/><circle cx="50" cy="50" r="30" fill="#8d6e63"/><ellipse cx="50" cy="62" rx="16" ry="12" fill="#d7ccc8"/><circle cx="38" cy="45" r="5" fill="#000"/><circle cx="62" cy="45" r="5" fill="#000"/><ellipse cx="50" cy="58" rx="6" ry="4" fill="#000"/></svg>`
+    svg: `<svg viewBox="0 0 100 100"><defs><linearGradient id="dogFur" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#d7ccc8"/><stop offset="40%" stop-color="#a1887f"/><stop offset="100%" stop-color="#6d4c41"/></linearGradient><linearGradient id="earFur" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#5d4037"/><stop offset="100%" stop-color="#3e2723"/></linearGradient></defs><path d="M 24 30 C 5 30 2 65 18 80 C 28 85 30 60 28 40 Z" fill="url(#earFur)"/><path d="M 76 30 C 95 30 98 65 82 80 C 72 85 70 60 72 40 Z" fill="url(#earFur)"/><ellipse cx="50" cy="48" rx="34" ry="30" fill="url(#dogFur)"/><ellipse cx="50" cy="62" rx="20" ry="16" fill="#f5f5f5"/><circle cx="34" cy="44" r="7" fill="#212121"/><circle cx="66" cy="44" r="7" fill="#212121"/><circle cx="32" cy="41" r="2.5" fill="#fff"/><circle cx="64" cy="41" r="2.5" fill="#fff"/><ellipse cx="34" cy="33" rx="5" ry="3" fill="#d7ccc8"/><ellipse cx="66" cy="33" rx="5" ry="3" fill="#d7ccc8"/><path d="M 42 56 Q 50 52 58 56 C 60 63 40 63 42 56 Z" fill="#111"/><ellipse cx="47" cy="56" rx="2" ry="1" fill="#fff" opacity="0.6"/><path d="M 44 64 Q 50 68 56 64" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M 47 66 Q 50 77 53 66 Z" fill="#ff5252"/></svg>`
   },
   { 
     name: 'Number 67', 
@@ -73,7 +73,8 @@ const TOOLS = [
   { 
     name: 'Pacman', 
     label: 'ᗧ',
-    svg: `<svg viewBox="0 0 100 100"><path d="M 50,50 L 92,26 A 42,42 0 1,0 92,74 Z" fill="#ffeb3b"/><circle cx="50" cy="24" r="5" fill="#000"/></svg>`
+    svg: `<svg viewBox="0 0 100 100"><path d="M 50,50 L 95,15 A 45,45 0 1,0 95,85 Z" fill="#ffeb3b"/><circle cx="52" cy="22" r="5.5" fill="#000"/></svg>`,
+    svgChomp: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#ffeb3b"/><circle cx="65" cy="25" r="5.5" fill="#000"/><line x1="50" y1="50" x2="95" y2="50" stroke="#d4b200" stroke-width="3"/></svg>`
   },
   { 
     name: 'Mario', 
@@ -88,7 +89,7 @@ const TOOLS = [
   { 
     name: 'Michael Jackson', 
     label: '🕺',
-    svg: `<svg viewBox="0 0 100 100"><path d="M 20 40 Q 10 70 25 90 Q 50 95 75 90 Q 90 70 80 40 Z" fill="#111"/><ellipse cx="50" cy="54" rx="24" ry="28" fill="#c68a53"/><path d="M 12 34 Q 50 24 88 34 L 76 28 Q 50 8 24 28 Z" fill="#151515"/><rect x="25" y="27" width="50" height="5" fill="#f0f0f0"/><path d="M 26 45 Q 37 43 48 45 Q 48 56 37 56 Q 26 56 26 45 Z" fill="#1a1a1a" stroke="#d4af37" stroke-width="1.5"/><path d="M 52 45 Q 63 43 74 45 Q 74 56 63 56 Q 52 56 52 45 Z" fill="#1a1a1a" stroke="#d4af37" stroke-width="1.5"/><line x1="48" y1="46" x2="52" y2="46" stroke="#d4af37" stroke-width="2"/><path d="M 50 46 L 47 62 L 53 62" fill="none" stroke="#9e6638" stroke-width="1.5"/><path d="M 37 70 Q 50 79 63 70 Q 50 73 37 70 Z" fill="#fff" stroke="#8c532b" stroke-width="1"/><path d="M 48 24 Q 40 40 44 52 Q 47 55 44 58" fill="none" stroke="#111" stroke-width="3.5" stroke-linecap="round"/></svg>`
+    svg: `<svg viewBox="0 0 100 100"><defs><linearGradient id="mjSkin" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#d7996c"/><stop offset="100%" stop-color="#a46338"/></linearGradient><linearGradient id="shades" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#333"/><stop offset="50%" stop-color="#111"/><stop offset="100%" stop-color="#444"/></linearGradient></defs><path d="M 15 35 Q 8 65 22 92 Q 50 98 78 92 Q 92 65 85 35 Z" fill="#0d0d0d"/><path d="M 28 35 Q 26 65 34 78 Q 50 90 66 78 Q 74 65 72 35 Z" fill="url(#mjSkin)"/><path d="M 20 82 L 35 75 L 50 95 L 65 75 L 80 82 L 90 100 L 10 100 Z" fill="#d32f2f"/><path d="M 35 75 L 50 95 L 65 75" fill="none" stroke="#111" stroke-width="3"/><path d="M 25 82 L 35 75 M 75 82 L 65 75" stroke="#ffeb3b" stroke-width="2"/><path d="M 12 36 Q 50 20 88 36 L 76 30 Q 50 8 24 30 Z" fill="#181818"/><rect x="25" y="27" width="50" height="5" fill="#f5f5f5"/><path d="M 26 44 Q 37 42 48 44 Q 48 58 37 58 Q 26 58 26 44 Z" fill="url(#shades)" stroke="#d4af37" stroke-width="1.5"/><path d="M 52 44 Q 63 42 74 44 Q 74 58 63 58 Q 52 58 52 44 Z" fill="url(#shades)" stroke="#d4af37" stroke-width="1.5"/><line x1="48" y1="45" x2="52" y2="45" stroke="#d4af37" stroke-width="2"/><path d="M 29 46 L 40 46 L 33 54 Z" fill="#fff" opacity="0.3"/><path d="M 55 46 L 66 46 L 59 54 Z" fill="#fff" opacity="0.3"/><path d="M 50 46 L 47 63 L 53 63" fill="none" stroke="#7a4623" stroke-width="1.5"/><path d="M 38 72 Q 50 80 62 72 Q 50 74 38 72 Z" fill="#fff" stroke="#683918" stroke-width="1"/><path d="M 50 20 Q 42 38 45 53 Q 48 57 44 60" fill="none" stroke="#0d0d0d" stroke-width="4" stroke-linecap="round"/></svg>`
   }
 ];
 
@@ -199,7 +200,11 @@ const restartBtn = document.getElementById('restart-btn');
 function updateToolUI() {
   if (toolsUnlocked && currentToolIndex < TOOLS.length) {
     const tool = TOOLS[currentToolIndex];
-    toolBtn.textContent = `${tool.label} ${tool.name} (${popsWithCurrentTool}/${POPS_PER_TOOL})`;
+    if (tool.name === 'Number 67') {
+      toolBtn.textContent = `67 (${popsWithCurrentTool}/${POPS_PER_TOOL})`;
+    } else {
+      toolBtn.textContent = `${tool.label} ${tool.name} (${popsWithCurrentTool}/${POPS_PER_TOOL})`;
+    }
     toolBtn.classList.remove('hidden');
   } else {
     toolBtn.classList.add('hidden');
@@ -330,6 +335,18 @@ window.addEventListener('pointerdown', (e) => {
     const index = bubbles.findIndex(b => b.mesh === poppedMesh);
     if (index !== -1) {
       playSound('pop');
+
+      const currentTool = TOOLS[currentToolIndex];
+      // Trigger Pacman mouth eating/chomping animation
+      if (currentTool.name === 'Pacman') {
+        customCursor.innerHTML = currentTool.svgChomp;
+        setTimeout(() => {
+          if (isToolActive && TOOLS[currentToolIndex]?.name === 'Pacman') {
+            customCursor.innerHTML = currentTool.svg;
+          }
+        }, 130);
+      }
+
       disposeMesh(bubbles[index]);
       bubbles.splice(index, 1);
 
@@ -346,9 +363,9 @@ window.addEventListener('pointerdown', (e) => {
         if (currentToolIndex >= TOOLS.length) {
           triggerVictory();
         }
-      } else {
-        const currentTool = TOOLS[currentToolIndex];
-        customCursor.innerHTML = currentTool.svg;
+      } else if (currentTool.name !== 'Pacman') {
+        const nextTool = TOOLS[currentToolIndex];
+        customCursor.innerHTML = nextTool.svg;
       }
 
       updateToolUI();
