@@ -46,9 +46,9 @@ const TOOLS = [
     html: `<svg viewBox="0 0 100 100"><path d="M20 75 L35 60 L75 20 C85 20 85 45 60 55 L30 85 Z" fill="#e0e0e0" stroke="#999" stroke-width="2"/><rect x="15" y="70" width="20" height="15" rx="3" transform="rotate(-45 25 77)" fill="#5c3a21"/></svg>`
   },
   { 
-    name: 'Bazooka', 
-    label: '🚀',
-    html: `<img src="https://i.ebayimg.com/images/g/C6sAAeSwjNlozPkS/s-l1200.jpg" alt="Bazooka" />`
+    name: 'Flower', 
+    label: '🌸',
+    html: `<img src="/flower.jpg" alt="Flower" />`
   },
   { 
     name: 'Kitten', 
