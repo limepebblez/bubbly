@@ -1,6 +1,9 @@
 import { inject } from '@vercel/analytics';
 inject();
 
+import { injectSpeedInsights } from '@vercel/speed-insights';
+injectSpeedInsights();
+
 import * as THREE from 'three';
 
 const scene = new THREE.Scene();
