@@ -45,7 +45,7 @@ const TOOLS = [
     label: '🔪',
     html: `<svg viewBox="0 0 100 100"><path d="M20 75 L35 60 L75 20 C85 20 85 45 60 55 L30 85 Z" fill="#e0e0e0" stroke="#999" stroke-width="2"/><rect x="15" y="70" width="20" height="15" rx="3" transform="rotate(-45 25 77)" fill="#5c3a21"/></svg>`
   },
- { 
+  { 
     name: 'Flower', 
     label: '🌸',
     html: `<img src="/flower.jpg?v=2" alt="Flower" class="flower-cursor" />`
@@ -139,6 +139,86 @@ function playSound(type = 'spawn') {
     osc.start(now);
     osc.stop(now + 0.15);
   }
+}
+
+// 5-Second Retro NES 8-Bit Victory Fanfare Synthesizer
+function playRetroVictoryFanfare() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  const startTime = audioCtx.currentTime + 0.05;
+  const noteFreq = (m) => 440 * Math.pow(2, (m - 69) / 12);
+
+  // Lead melody channel [MIDI Note, Delay, Duration]
+  const melody = [
+    [60, 0.0, 0.1],   // C4
+    [64, 0.1, 0.1],   // E4
+    [67, 0.2, 0.1],   // G4
+    [72, 0.3, 0.25],  // C5
+
+    [65, 0.6, 0.1],   // F4
+    [69, 0.7, 0.1],   // A4
+    [72, 0.8, 0.1],   // C5
+    [77, 0.9, 0.25],  // F5
+
+    [67, 1.2, 0.1],   // G4
+    [71, 1.3, 0.1],   // B4
+    [74, 1.4, 0.1],   // D5
+    [79, 1.5, 0.25],  // G5
+
+    [72, 1.85, 0.15], // C5
+    [72, 2.05, 0.15], // C5
+    [72, 2.25, 0.15], // C5
+    [84, 2.45, 2.3],  // C6 (Grand final held note)
+
+    // Triad chord extensions on final note
+    [76, 2.45, 2.3],  // E5
+    [79, 2.45, 2.3]   // G5
+  ];
+
+  // Triangle Bassline
+  const bass = [
+    [48, 0.0, 0.55],  // C3
+    [53, 0.6, 0.55],  // F3
+    [55, 1.2, 0.60],  // G3
+    [48, 1.85, 2.9]   // C3
+  ];
+
+  // Play Square Wave Chiptune Lead
+  melody.forEach(([note, delay, duration]) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(noteFreq(note), startTime + delay);
+
+    gain.gain.setValueAtTime(0.12, startTime + delay);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + delay + duration - 0.01);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start(startTime + delay);
+    osc.stop(startTime + delay + duration);
+  });
+
+  // Play Triangle Wave Bass
+  bass.forEach(([note, delay, duration]) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(noteFreq(note), startTime + delay);
+
+    gain.gain.setValueAtTime(0.22, startTime + delay);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + delay + duration);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start(startTime + delay);
+    osc.stop(startTime + delay + duration);
+  });
 }
 
 function createBubbleMaterial(colorHex) {
@@ -373,6 +453,7 @@ window.addEventListener('pointerdown', (e) => {
 });
 
 function triggerVictory() {
+  playRetroVictoryFanfare(); // Play 5-second retro NES victory music
   updateToolUI();
   victoryScreen.classList.remove('hidden');
 
