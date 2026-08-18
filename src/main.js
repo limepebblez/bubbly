@@ -294,7 +294,8 @@ function spawnBubble() {
     toolsUnlocked = true;
   }
 
-  const radius = 0.7 + Math.random() * 0.3;
+  // Smallest radius set to 0.4 (range: 0.4 to 1.0)
+  const radius = 0.4 + Math.random() * 0.6;
   const geometry = new THREE.SphereGeometry(1, 32, 32);
   const choice = PALETTE[Math.floor(Math.random() * PALETTE.length)];
   const isGlitter = choice === 'glitter';
