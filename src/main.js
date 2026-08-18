@@ -149,7 +149,6 @@ function playRetroVictoryFanfare() {
   const startTime = audioCtx.currentTime + 0.05;
   const noteFreq = (m) => 440 * Math.pow(2, (m - 69) / 12);
 
-  // Lead melody channel [MIDI Note, Delay, Duration]
   const melody = [
     [60, 0.0, 0.1],   // C4
     [64, 0.1, 0.1],   // E4
@@ -171,12 +170,10 @@ function playRetroVictoryFanfare() {
     [72, 2.25, 0.15], // C5
     [84, 2.45, 2.3],  // C6 (Grand final held note)
 
-    // Triad chord extensions on final note
     [76, 2.45, 2.3],  // E5
     [79, 2.45, 2.3]   // G5
   ];
 
-  // Triangle Bassline
   const bass = [
     [48, 0.0, 0.55],  // C3
     [53, 0.6, 0.55],  // F3
@@ -184,7 +181,6 @@ function playRetroVictoryFanfare() {
     [48, 1.85, 2.9]   // C3
   ];
 
-  // Play Square Wave Chiptune Lead
   melody.forEach(([note, delay, duration]) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -202,7 +198,6 @@ function playRetroVictoryFanfare() {
     osc.stop(startTime + delay + duration);
   });
 
-  // Play Triangle Wave Bass
   bass.forEach(([note, delay, duration]) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -416,6 +411,19 @@ window.addEventListener('pointerdown', (e) => {
     if (index !== -1) {
       playSound('pop');
 
+      // Idea #5: Dynamic Size-Based Haptic Feedback
+      const poppedBubble = bubbles[index];
+      const radius = poppedBubble.radius;
+      if ('vibrate' in navigator) {
+        if (radius < 0.85) {
+          navigator.vibrate(12); // Light tap for small bubbles
+        } else if (radius < 1.3) {
+          navigator.vibrate(35); // Solid thud for medium bubbles
+        } else {
+          navigator.vibrate([50, 25, 75]); // Heavy double-rumble for large merged bubbles
+        }
+      }
+
       const currentTool = TOOLS[currentToolIndex];
       if (currentTool.name === 'Pacman') {
         customCursor.innerHTML = currentTool.htmlChomp;
@@ -453,7 +461,7 @@ window.addEventListener('pointerdown', (e) => {
 });
 
 function triggerVictory() {
-  playRetroVictoryFanfare(); // Play 5-second retro NES victory music
+  playRetroVictoryFanfare();
   updateToolUI();
   victoryScreen.classList.remove('hidden');
 
