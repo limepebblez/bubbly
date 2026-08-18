@@ -103,6 +103,7 @@ let isToolActive = false;
 let toolsUnlocked = false;
 
 const bubbles = [];
+const popEffects = [];
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
@@ -150,7 +151,6 @@ function playSound(type = 'spawn', radius = 0.7) {
   }
 }
 
-// 5-Second Retro NES 8-Bit Victory Fanfare Synthesizer
 function playRetroVictoryFanfare() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -264,6 +264,58 @@ function createGlitterParticles() {
   return new THREE.Points(geometry, material);
 }
 
+function triggerPopFX(position, color, radius) {
+  const group = new THREE.Group();
+  group.position.copy(position);
+
+  // 1. Shimmer Burst Ring
+  const ringGeo = new THREE.RingGeometry(radius * 0.2, radius * 0.35, 32);
+  const ringMat = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.9,
+    blending: THREE.AdditiveBlending
+  });
+  const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+  ringMesh.rotation.x = Math.random() * Math.PI;
+  ringMesh.rotation.y = Math.random() * Math.PI;
+  group.add(ringMesh);
+
+  // 2. Cute Droplet Spray Particles
+  const particleCount = 12;
+  const particleGeo = new THREE.SphereGeometry(radius * 0.08, 8, 8);
+  const particleMat = new THREE.MeshBasicMaterial({
+    color: color,
+    transparent: true,
+    opacity: 1.0
+  });
+
+  const particles = [];
+  for (let i = 0; i < particleCount; i++) {
+    const p = new THREE.Mesh(particleGeo, particleMat);
+    const dir = new THREE.Vector3(
+      (Math.random() - 0.5) * 2,
+      (Math.random() - 0.5) * 2,
+      (Math.random() - 0.5) * 2
+    ).normalize();
+
+    const speed = (0.08 + Math.random() * 0.12) * radius;
+    particles.push({ mesh: p, velocity: dir.multiplyScalar(speed) });
+    group.add(p);
+  }
+
+  scene.add(group);
+
+  popEffects.push({
+    group,
+    ringMesh,
+    particles,
+    age: 0,
+    maxAge: 0.18
+  });
+}
+
 function getScreenLimits(zPos, radius) {
   const distToCam = camera.position.z - zPos;
   const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * distToCam;
@@ -303,7 +355,6 @@ function spawnBubble() {
     toolsUnlocked = true;
   }
 
-  // Smallest radius set to 0.4 (range: 0.4 to 1.0)
   const radius = 0.4 + Math.random() * 0.6;
   const geometry = new THREE.SphereGeometry(1, 32, 32);
   const choice = PALETTE[Math.floor(Math.random() * PALETTE.length)];
@@ -422,10 +473,13 @@ window.addEventListener('pointerdown', (e) => {
       const poppedBubble = bubbles[index];
       const radius = poppedBubble.radius;
 
-      // Pass bubble radius into playSound for Idea #6
+      // Trigger 3D Particle Burst FX
+      triggerPopFX(poppedBubble.mesh.position, poppedBubble.color, radius);
+
+      // Idea #6: Dynamic Sound Pitch/Volume
       playSound('pop', radius);
 
-      // Idea #5: Dynamic Size-Based Haptics
+      // Idea #5: Dynamic Size-Based Haptic Feedback
       if ('vibrate' in navigator) {
         if (radius < 0.85) {
           navigator.vibrate(12);
@@ -446,7 +500,7 @@ window.addEventListener('pointerdown', (e) => {
         }, 130);
       }
 
-      disposeMesh(bubbles[index]);
+      disposeMesh(poppedBubble);
       bubbles.splice(index, 1);
 
       popsWithCurrentTool++;
@@ -532,6 +586,30 @@ restartBtn.addEventListener('click', () => {
 
 function animate() {
   requestAnimationFrame(animate);
+
+  // Update animated pop effects
+  for (let i = popEffects.length - 1; i >= 0; i--) {
+    const fx = popEffects[i];
+    fx.age += 0.016;
+    const progress = fx.age / fx.maxAge;
+
+    if (progress >= 1.0) {
+      scene.remove(fx.group);
+      fx.group.traverse((child) => {
+        if (child.geometry) child.geometry.dispose();
+        if (child.material) child.material.dispose();
+      });
+      popEffects.splice(i, 1);
+    } else {
+      fx.ringMesh.scale.addScalar(0.25);
+      fx.ringMesh.material.opacity = 1 - progress;
+
+      for (const p of fx.particles) {
+        p.mesh.position.add(p.velocity);
+        p.mesh.scale.multiplyScalar(0.92);
+      }
+    }
+  }
 
   for (const b of bubbles) {
     b.mesh.position.add(b.velocity);
