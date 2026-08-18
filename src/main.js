@@ -108,7 +108,7 @@ const mouse = new THREE.Vector2();
 
 let audioCtx = null;
 
-function playSound(type = 'spawn') {
+function playSound(type = 'spawn', radius = 0.7) {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (audioCtx.state === 'suspended') audioCtx.resume();
 
@@ -130,14 +130,23 @@ function playSound(type = 'spawn') {
     osc.stop(now + 0.08);
   } else if (type === 'pop') {
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(800, now);
-    osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
-    gain.gain.setValueAtTime(0.5, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+
+    // Idea #6: Dynamic Pitch & Volume Scaling based on Bubble Radius
+    const clampedRadius = Math.min(Math.max(radius, 0.4), 3.0);
+    const startFreq = Math.max(200, 750 / Math.pow(clampedRadius, 0.85));
+    const endFreq = Math.max(30, startFreq / 8);
+    const duration = Math.min(0.3, 0.10 + clampedRadius * 0.04);
+    const volume = Math.min(0.85, 0.25 + clampedRadius * 0.25);
+
+    osc.frequency.setValueAtTime(startFreq, now);
+    osc.frequency.exponentialRampToValueAtTime(endFreq, now + duration);
+    gain.gain.setValueAtTime(volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(now);
-    osc.stop(now + 0.15);
+    osc.stop(now + duration);
   }
 }
 
@@ -410,18 +419,20 @@ window.addEventListener('pointerdown', (e) => {
     const poppedMesh = intersects[0].object;
     const index = bubbles.findIndex(b => b.mesh === poppedMesh);
     if (index !== -1) {
-      playSound('pop');
-
-      // Idea #5: Dynamic Size-Based Haptic Feedback
       const poppedBubble = bubbles[index];
       const radius = poppedBubble.radius;
+
+      // Pass bubble radius into playSound for Idea #6
+      playSound('pop', radius);
+
+      // Idea #5: Dynamic Size-Based Haptics
       if ('vibrate' in navigator) {
         if (radius < 0.85) {
-          navigator.vibrate(12); // Light tap for small bubbles
+          navigator.vibrate(12);
         } else if (radius < 1.3) {
-          navigator.vibrate(35); // Solid thud for medium bubbles
+          navigator.vibrate(35);
         } else {
-          navigator.vibrate([50, 25, 75]); // Heavy double-rumble for large merged bubbles
+          navigator.vibrate([50, 25, 75]);
         }
       }
 
